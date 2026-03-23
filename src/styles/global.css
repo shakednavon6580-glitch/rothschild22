@@ -492,6 +492,7 @@ main {
 
 .chapter__image {
   width: 100%;
+  height: auto;
   border-radius: var(--radius-lg);
   object-fit: cover;
   box-shadow: var(--shadow);
@@ -531,6 +532,7 @@ main {
 }
 
 .drawing-card__image {
+  height: auto;
   padding: 0.9rem;
   background: #fff;
   object-fit: contain;

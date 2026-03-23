@@ -1,9 +1,15 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { createElement, forwardRef } from 'react';
 import { cleanup, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import App from './App';
 
 const reducedMotionState = vi.hoisted(() => ({ enabled: true }));
+const globalStyles = readFileSync(resolve(process.cwd(), 'src/styles/global.css'), 'utf8').replace(
+  /@import[^;]+;/g,
+  '',
+);
 
 vi.mock('framer-motion', () => {
   const motion = new Proxy(
@@ -38,6 +44,7 @@ describe('mobile image rendering', () => {
     cleanup();
     reducedMotionState.enabled = true;
     window.localStorage.clear();
+    document.head.innerHTML = '';
     Object.defineProperty(window, 'innerWidth', {
       configurable: true,
       value: 390,
@@ -48,6 +55,11 @@ describe('mobile image rendering', () => {
       value: 844,
       writable: true,
     });
+
+    const styleElement = document.createElement('style');
+    styleElement.setAttribute('data-test-styles', 'global');
+    styleElement.textContent = globalStyles;
+    document.head.appendChild(styleElement);
   });
 
   afterEach(() => {
@@ -78,5 +90,30 @@ describe('mobile image rendering', () => {
       '2760',
     );
     expect(screen.getByAltText('Aerial building hero view')).toHaveAttribute('height', '1504');
+  });
+
+  it('keeps responsive mobile images bounded by their containers instead of intrinsic height', () => {
+    render(<App />);
+
+    const heroImage = screen.getByAltText(
+      'Aerial view of Rothschild 22 above the Tel Aviv skyline',
+    );
+    const drawingImage = screen.getByAltText(
+      'Architectural interior drawing of the penthouse at Rothschild 22',
+    );
+    const chapterImage = screen.getByAltText('Corner view with terrace and glazing');
+    const galleryImage = screen.getByAltText('Aerial building hero view');
+
+    expect(window.getComputedStyle(heroImage).height).toBe('100%');
+    expect(window.getComputedStyle(galleryImage).height).toBe('100%');
+    expect(window.getComputedStyle(chapterImage).height).toBe('auto');
+    expect(window.getComputedStyle(chapterImage).maxWidth).toBe('100%');
+    expect(window.getComputedStyle(drawingImage).height).toBe('auto');
+    expect(window.getComputedStyle(drawingImage).width).toBe('100%');
+    expect(globalStyles).toMatch(/\.drawing-card__image\s*\{[\s\S]*?height:\s*auto;/);
+    expect(globalStyles).toMatch(/\.chapter__image\s*\{[\s\S]*?height:\s*auto;/);
+    expect(globalStyles).toMatch(
+      /@media \(max-width: 720px\)\s*\{[\s\S]*?\.chapter__image\s*\{[\s\S]*?min-height:\s*320px;/,
+    );
   });
 });
