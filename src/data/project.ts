@@ -1,0 +1,544 @@
+import type {
+  Chapter,
+  CreditsContent,
+  GallerySectionContent,
+  DrawingsSectionData,
+  GalleryItem,
+  HeroContent,
+  IntroContent,
+  Locale,
+  NavigationContent,
+  ProjectFact,
+  SiteContent,
+  VideoContent,
+} from '../types/content';
+
+export const LOCALE_STORAGE_KEY = 'rothschild-22-locale';
+export const DEFAULT_LOCALE: Locale = 'en';
+export const SUPPORTED_LOCALES: Locale[] = ['en', 'he'];
+
+const englishNavigation: NavigationContent = {
+  brandMark: 'R22',
+  brandLabel: 'Editorial Edition',
+  quickLinks: {
+    drawings: 'Drawings',
+    gallery: 'Gallery',
+    film: 'Film',
+  },
+  menuLabel: 'Chapters',
+  tocTitle: 'Table of Contents',
+  tocLinks: {
+    introduction: 'Introduction',
+    drawings: 'Drawings',
+    gallery: 'Gallery',
+    film: 'Final Film',
+  },
+  languageSwitcherLabel: 'Language',
+  localeLabels: {
+    en: 'English',
+    he: 'עברית',
+  },
+};
+
+const hebrewNavigation: NavigationContent = {
+  brandMark: 'R22',
+  brandLabel: 'מהדורת מגזין',
+  quickLinks: {
+    drawings: 'שרטוטים',
+    gallery: 'גלריה',
+    film: 'הסרט',
+  },
+  menuLabel: 'פרקים',
+  tocTitle: 'תוכן העניינים',
+  tocLinks: {
+    introduction: 'פתיחה',
+    drawings: 'שרטוטים',
+    gallery: 'גלריה',
+    film: 'סרט סיום',
+  },
+  languageSwitcherLabel: 'שפה',
+  localeLabels: {
+    en: 'English',
+    he: 'עברית',
+  },
+};
+
+const englishHero: HeroContent = {
+  eyebrow: 'Architectural Editorial Luxury',
+  title: 'Rothschild 22',
+  subtitle:
+    'An editorial walkthrough of light, materiality, and elevated urban living above the Tel Aviv coastline.',
+  description:
+    'A cinematic residential landmark shaped as a digital magazine: calm typography, immersive media, and a final film that closes the narrative.',
+  meta: ['Tel Aviv', '2026', 'Residential Tower'],
+  coverVideo: '/assets/videos/hero-film.mp4',
+  coverImage: '/assets/images/cover-aerial.png',
+  imageAlt: 'Aerial view of Rothschild 22 above the Tel Aviv skyline',
+  ctaLabel: 'Enter Project',
+  scrollLabel: 'Scroll to begin',
+  metaAriaLabel: 'Project summary',
+};
+
+const hebrewHero: HeroContent = {
+  eyebrow: 'אדריכלות. עריכה. יוקרה.',
+  title: 'Rothschild 22',
+  subtitle:
+    'מסע עריכתי בין אור, חומר וחוויית מגורים עילית מעל קו החוף של תל אביב.',
+  description:
+    'Rothschild 22 מוצג כאן כמו מגזין דיגיטלי חי: טיפוגרפיה שקטה, דימויים סוחפים וסרט סיום שסוגר את הסיפור בקצב מדויק.',
+  meta: ['תל אביב', '2026', 'מגדל מגורים'],
+  coverVideo: '/assets/videos/hero-film.mp4',
+  coverImage: '/assets/images/cover-aerial.png',
+  imageAlt: 'מבט אווירי על Rothschild 22 מעל קו הרקיע של תל אביב',
+  ctaLabel: 'להיכנס לפרויקט',
+  scrollLabel: 'לגלול כדי להתחיל',
+  metaAriaLabel: 'תקציר הפרויקט',
+};
+
+const englishIntro: IntroContent = {
+  id: 'introduction',
+  heading: 'A residential narrative shaped as a digital magazine.',
+  eyebrow: 'Introduction',
+  subheading:
+    'The experience is built as a quiet sequence of chapters, balancing fast scanning with slower, editorial reading.',
+  body:
+    'The interface remains intentionally restrained: generous white space, precise typography, and fluid motion that reveals content rather than competing with it.',
+  ctaLabel: 'Start Reading',
+  ctaHref: '#drawings',
+  facts: [
+    { label: 'Location', value: 'Rothschild Boulevard, Tel Aviv' },
+    { label: 'Year', value: '2026' },
+    { label: 'Program', value: 'Luxury Residential' },
+    { label: 'Area', value: '4,800 sqm' },
+  ],
+};
+
+const hebrewIntro: IntroContent = {
+  id: 'introduction',
+  heading: 'פרויקט מגורים שמסופר כמו גיליון דיגיטלי.',
+  eyebrow: 'פתיחה',
+  subheading:
+    'החוויה בנויה כרצף מדוד של פרקים, כזה שמאפשר גם סריקה מהירה וגם קריאה איטית ומדויקת.',
+  body:
+    'הממשק שומר על איפוק מכוון: מרווחים נדיבים, טיפוגרפיה מדויקת ותנועה זורמת שמגלה את התוכן בלי להתחרות בו.',
+  ctaLabel: 'להתחיל את הסיור',
+  ctaHref: '#drawings',
+  facts: [
+    { label: 'מיקום', value: 'שדרות רוטשילד, תל אביב' },
+    { label: 'שנה', value: '2026' },
+    { label: 'ייעוד', value: 'מגורי יוקרה' },
+    { label: 'שטח', value: '4,800 מ"ר' },
+  ],
+};
+
+const englishChapters: Chapter[] = [
+  {
+    id: 'vision',
+    number: '01',
+    title: 'Vision',
+    eyebrow: 'A coastal skyline statement',
+    intro:
+      'The project begins as a quiet monument: generous terraces, continuous glazing, and a silhouette designed to feel sculptural from every street approach.',
+    body: [
+      'Rather than compete with the boulevard, the building rises as a measured sequence of setbacks that preserve openness and amplify the sea horizon.',
+      'The editorial experience mirrors that discipline with wide margins, restrained controls, and one dominant visual move per chapter.',
+    ],
+    quote: 'One iconic frame should carry the chapter before the interface does.',
+    image: '/assets/images/glass-corner.png',
+    imageAlt: 'Corner view with terrace and glazing',
+    layout: 'image-led',
+    cta: 'Continue to Context',
+  },
+  {
+    id: 'context',
+    number: '02',
+    title: 'Context',
+    eyebrow: 'City grain and sea proximity',
+    intro:
+      'The building sits inside a dense white urban fabric, where the coastline and boulevard geometry shape every view corridor.',
+    body: [
+      'Its placement balances privacy with exposure, opening key edges toward light and long perspectives while preserving a strong street presence below.',
+      'In UI terms, this becomes an asymmetric composition with a large image block and a compact column of text that never overpowers the visuals.',
+    ],
+    image: '/assets/images/street-facade.png',
+    imageAlt: 'Street level perspective of the facade',
+    layout: 'split',
+    cta: 'Continue to Concept',
+  },
+  {
+    id: 'concept',
+    number: '03',
+    title: 'Concept',
+    eyebrow: 'Terraces as spatial rhythm',
+    intro:
+      'The massing unfolds as layered planes, using terraces and glazing to turn the skyline into an active part of the interior experience.',
+    body: [
+      'Each level is treated as a threshold between enclosure and openness, making movement through the project feel like a sequence of framed reveals.',
+      'This chapter uses a quieter tempo, longer vertical spacing, and subtle motion to communicate architectural progression rather than spectacle.',
+    ],
+    image: '/assets/images/cover-brand.png',
+    imageAlt: 'Aerial architectural view of Rothschild 22',
+    layout: 'quiet',
+    cta: 'Continue to Materiality',
+  },
+  {
+    id: 'materiality',
+    number: '04',
+    title: 'Materiality',
+    eyebrow: 'Stone, glass, oak, brushed metal',
+    intro:
+      'Inside, the palette turns tactile and warm: pale marble, integrated joinery, and soft daylight reflected across smooth surfaces.',
+    body: [
+      'The material story is deliberately reduced, allowing texture and shadow to do the expressive work without visual noise.',
+      'The interface supports that with a restrained accent color, thin dividers, and image crops that privilege detail over repetition.',
+    ],
+    image: '/assets/images/kitchen-view.png',
+    imageAlt: 'Minimal kitchen with sea view',
+    layout: 'split',
+    cta: 'Continue to Interior',
+  },
+  {
+    id: 'interior',
+    number: '05',
+    title: 'Interior',
+    eyebrow: 'Evening illumination as the final skyline signature',
+    intro:
+      'The interior sequence becomes softer and more intimate, using measured lighting, curated furniture, and tactile finishes to turn the residence into a composed evening atmosphere.',
+    body: [
+      'Rather than treating the apartment as a neutral shell, this chapter focuses on mood, proportion, and domestic calibration, where each object reinforces the calm architectural language.',
+      'Placed after materiality, it translates the palette into lived space and bridges the project from surface expression into inhabitation and comfort.',
+    ],
+    image: '/assets/images/night-aerial.png',
+    imageAlt: 'Night aerial view of Rothschild 22 with illuminated skyline presence',
+    layout: 'image-led',
+    cta: 'Continue to Spatial Experience',
+  },
+  {
+    id: 'spatial-experience',
+    number: '06',
+    title: 'Spatial Experience',
+    eyebrow: 'Living with the city in frame',
+    intro:
+      'Daily life unfolds in continuous visual contact with the boulevard, where interior calm meets an active urban edge beyond the glass.',
+    body: [
+      'Rooms are organized for long views, soft transitions, and a sense of elevation that feels immersive even when the composition remains minimal.',
+      'The magazine closes the narrative arc by moving from these inhabited views into a deeper gallery and, finally, a filmic summary.',
+    ],
+    image: '/assets/images/living-room.png',
+    imageAlt: 'Living room with panoramic city view',
+    layout: 'image-led',
+    cta: 'Open Gallery',
+  },
+];
+
+const hebrewChapters: Chapter[] = [
+  {
+    id: 'vision',
+    number: '01',
+    title: 'חזון',
+    eyebrow: 'אייקון שקט על קו הרקיע',
+    intro:
+      'הפרויקט נולד כמבנה שיודע לנכוח בלי להרים קול: טרסות נדיבות, מעטפת זכוכית רציפה וצללית פיסולית שנקראת היטב מכל גישה רחוב.',
+    body: [
+      'במקום להתחרות בשדרה, המגדל עולה כרצף מדוד של נסיגות שמגדילות את תחושת הפתיחות ומחדדות את המפגש עם האופק.',
+      'גם הממשק מאמץ את אותו איפוק: שוליים רחבים, שליטה שקטה ופריים מרכזי אחד שנותן לכל פרק את הטון שלו.',
+    ],
+    quote: 'הפריים צריך להוביל את הפרק עוד לפני שהממשק נכנס לתמונה.',
+    image: '/assets/images/glass-corner.png',
+    imageAlt: 'מבט פינתי עם טרסה ומעטפת זכוכית',
+    layout: 'image-led',
+    cta: 'להמשיך אל ההקשר',
+  },
+  {
+    id: 'context',
+    number: '02',
+    title: 'הקשר',
+    eyebrow: 'עיר, קו חוף ורשת של מבטים',
+    intro:
+      'הבניין נטוע בתוך מרקם עירוני לבן וצפוף, כזה שבו החוף והשדרה מגדירים כל כיוון מבט משמעותי.',
+    body: [
+      'המיקום שלו מאזן בין פרטיות לחשיפה: הוא נפתח אל האור והמרחק, אבל שומר על נוכחות חדה וברורה בגובה הרחוב.',
+      'במונחי ממשק, זו קומפוזיציה א-סימטרית שמעניקה לדימוי מקום גדול ולקריאה מקום מדויק, בלי שאחד יגבר על השני.',
+    ],
+    image: '/assets/images/street-facade.png',
+    imageAlt: 'מבט רחוב על החזית',
+    layout: 'split',
+    cta: 'להמשיך אל הרעיון',
+  },
+  {
+    id: 'concept',
+    number: '03',
+    title: 'הרעיון',
+    eyebrow: 'טרסות כקצב אדריכלי',
+    intro:
+      'המסה נפרשת כשכבות מדורגות, והטרסות הופכות את קו הרקיע לחלק פעיל מחוויית הפנים.',
+    body: [
+      'כל קומה מתפקדת כנקודת מעבר בין סגירות לפתיחות, כך שהתנועה בפרויקט מרגישה כמו סדרה של גילויים מדויקים.',
+      'לכן גם הפרק הזה עובד בקצב רגוע יותר, עם מרווחים אנכיים נדיבים ותנועה עדינה שמדגישה מהלך אדריכלי ולא מופע.',
+    ],
+    image: '/assets/images/cover-brand.png',
+    imageAlt: 'מבט אווירי אדריכלי על Rothschild 22',
+    layout: 'quiet',
+    cta: 'להמשיך אל החומריות',
+  },
+  {
+    id: 'materiality',
+    number: '04',
+    title: 'חומריות',
+    eyebrow: 'אבן, זכוכית, עץ אלון ומתכת מוברשת',
+    intro:
+      'בפנים, הפלטה נעשית חמה ומוחשית יותר: שיש בהיר, נגרות אינטגרלית ואור יום רך שנשבר על משטחים מדויקים.',
+    body: [
+      'סיפור החומרים נשאר מצומצם במתכוון, כדי שהמרקם והצל יעשו את העבודה האקספרסיבית בלי רעש מיותר.',
+      'גם הממשק תומך בכך עם צבע הדגשה מרוסן, קווי חלוקה דקים וחיתוכי תמונה שמעדיפים חומר ופרט על פני עומס.',
+    ],
+    image: '/assets/images/kitchen-view.png',
+    imageAlt: 'מטבח מינימליסטי עם מבט לים',
+    layout: 'split',
+    cta: 'להמשיך אל חללי הפנים',
+  },
+  {
+    id: 'interior',
+    number: '05',
+    title: 'חללי הפנים',
+    eyebrow: 'אור ערב שנותן למגדל זהות לילית',
+    intro:
+      'רצף הפנים נעשה אינטימי ורך יותר, עם תאורה מדודה, ריהוט אצור וטקסטורות שמייצרות אווירה אסופה ומעודנת.',
+    body: [
+      'במקום להתייחס לדירה כקליפה ניטרלית, הפרק הזה עוסק במצב רוח, בפרופורציה ובאופן שבו כל אובייקט מחזק את השפה האדריכלית.',
+      'אחרי החומריות, זהו השלב שבו הפלטה הופכת לחיים עצמם, ומחברת בין מעטפת מדויקת לנוחות יומיומית.',
+    ],
+    image: '/assets/images/night-aerial.png',
+    imageAlt: 'מבט לילי אווירי על Rothschild 22',
+    layout: 'image-led',
+    cta: 'להמשיך אל חוויית המגורים',
+  },
+  {
+    id: 'spatial-experience',
+    number: '06',
+    title: 'חוויית המגורים',
+    eyebrow: 'העיר תמיד בתוך הפריים',
+    intro:
+      'חיי היומיום נפתחים אל השדרה ברצף כמעט קולנועי, במקום שבו שקט פנימי פוגש קצב אורבני מעבר לזכוכית.',
+    body: [
+      'החדרים מסודרים לטובת מבטים ארוכים, מעברים רכים ותחושת גובה שנשארת נוכחת גם כשהשפה נשמרת מינימלית.',
+      'מכאן המסלול נסגר באופן טבעי אל גלריית הדימויים, ומשם אל סרט הסיום שמסכם את הסיפור בתנועה.',
+    ],
+    image: '/assets/images/living-room.png',
+    imageAlt: 'סלון עם מבט פנורמי על העיר',
+    layout: 'image-led',
+    cta: 'לפתוח את הגלריה',
+  },
+];
+
+const englishDrawings: DrawingsSectionData = {
+  id: 'drawings',
+  heading: '3D Drawings',
+  eyebrow: 'Interior and building studies',
+  subheading:
+    'A dedicated pair of architectural sheets that read the project in section-like interior perspective and full-building axonometric form.',
+  ctaLabel: 'Continue to Vision',
+  ctaHref: '#vision',
+  missingFileLabel: 'Waiting for the local file at',
+  items: [
+    {
+      src: '/assets/images/drawing-interior.png',
+      alt: 'Architectural interior drawing of the penthouse at Rothschild 22',
+      title: 'Interior Drawing',
+      caption:
+        'Penthouse interior sheet with annotated materials, lighting, and furniture composition.',
+    },
+    {
+      src: '/assets/images/drawing-structure.png',
+      alt: '3D architectural drawing of Rothschild 22 in Tel Aviv',
+      title: 'Building Drawing',
+      caption:
+        'Axonometric building study showing terraces, glazing, planted decks, and the skyline-facing massing.',
+    },
+  ],
+};
+
+const hebrewDrawings: DrawingsSectionData = {
+  id: 'drawings',
+  heading: 'שרטוטי 3D',
+  eyebrow: 'חתכי פנים ומבטי מבנה',
+  subheading:
+    'שני לוחות אדריכליים שמציגים את הפרויקט גם מבפנים וגם כמסה שלמה, עם קריאה מדויקת של חלל, מבנה וקצב.',
+  ctaLabel: 'להמשיך אל החזון',
+  ctaHref: '#vision',
+  missingFileLabel: 'הקובץ המקומי עדיין לא זמין בנתיב',
+  items: [
+    {
+      src: '/assets/images/drawing-interior.png',
+      alt: 'שרטוט אדריכלי של חלל הפנטהאוז ב-Rothschild 22',
+      title: 'שרטוט פנים',
+      caption:
+        'לוח פנימי של הפנטהאוז עם קריאת חומרים, אור וריהוט כמקשה אחת.',
+    },
+    {
+      src: '/assets/images/drawing-structure.png',
+      alt: 'שרטוט תלת-ממדי של Rothschild 22 בתל אביב',
+      title: 'שרטוט מבנה',
+      caption:
+        'אקסונומטריה של המגדל שמחדדת את הטרסות, הזיגוג והמפגש עם קו הרקיע.',
+    },
+  ],
+};
+
+const englishGalleryItems: GalleryItem[] = [
+  {
+    src: '/assets/images/cover-aerial.png',
+    alt: 'Aerial building hero view',
+    caption: 'Opening frame above the urban grid',
+  },
+  {
+    src: '/assets/images/pool-perspective.png',
+    alt: 'Terrace and pool perspective',
+    caption: 'A horizon line that begins in water and ends at sea',
+  },
+  {
+    src: '/assets/images/interior-portrait.png',
+    alt: 'Portrait interior moment',
+    caption: 'Scale, intimacy, and domestic presence',
+  },
+  {
+    src: '/assets/images/cover-brand.png',
+    alt: 'Architectural aerial silhouette of the tower',
+    caption: 'Layered terraces read as a single skyline silhouette',
+  },
+  {
+    src: '/assets/images/night-aerial.png',
+    alt: 'Night aerial building view',
+    caption: 'Evening illumination as the final skyline signature',
+  },
+];
+
+const hebrewGalleryItems: GalleryItem[] = [
+  {
+    src: '/assets/images/cover-aerial.png',
+    alt: 'מבט פתיחה אווירי על המגדל',
+    caption: 'פריים פתיחה מעל המרקם העירוני',
+  },
+  {
+    src: '/assets/images/pool-perspective.png',
+    alt: 'מבט על הטרסה והבריכה',
+    caption: 'קו אופק שמתחיל במים ונגמר בים',
+  },
+  {
+    src: '/assets/images/interior-portrait.png',
+    alt: 'רגע אינטימי מתוך חלל הפנים',
+    caption: 'קנה מידה, אינטימיות ונוכחות ביתית',
+  },
+  {
+    src: '/assets/images/cover-brand.png',
+    alt: 'מבט אווירי אדריכלי על המגדל',
+    caption: 'הטרסות המדורגות נקראות כצללית אחת',
+  },
+  {
+    src: '/assets/images/night-aerial.png',
+    alt: 'מבט לילי אווירי על המגדל',
+    caption: 'חתימת ערב שמבליטה את קו הרקיע',
+  },
+];
+
+const englishGallery: GallerySectionContent = {
+  id: 'gallery',
+  heading: 'Gallery',
+  eyebrow: 'Deep visual reading',
+  subheading:
+    'A continuous ribbon of featured frames, scaled up to feel cinematic while staying calm, legible, and truly seamless.',
+  items: englishGalleryItems,
+};
+
+const hebrewGallery: GallerySectionContent = {
+  id: 'gallery',
+  heading: 'גלריה',
+  eyebrow: 'קריאה ויזואלית עמוקה',
+  subheading:
+    'רצועה רציפה של פריימים נבחרים, גדולה ונוכחת, שנעה בלי להפר את השקט של הקריאה.',
+  items: hebrewGalleryItems,
+};
+
+const englishVideo: VideoContent = {
+  id: 'film',
+  title: 'Final Film',
+  eyebrow: 'Closing moment',
+  subtitle: 'A final look',
+  description:
+    'A calm transition into motion, designed as the emotional closing sequence rather than a disruptive autoplay element.',
+  playLabel: 'Play Film',
+  unsupportedMessage: 'Your browser does not support HTML5 video.',
+  src: '/assets/videos/final-film.mp4',
+  poster: '/assets/images/night-aerial.png',
+};
+
+const hebrewVideo: VideoContent = {
+  id: 'film',
+  title: 'סרט סיום',
+  eyebrow: 'פריים אחרון',
+  subtitle: 'מבט אחרון',
+  description:
+    'מעבר רגוע מתמונה לתנועה, שנועד לסגור את החוויה רגשית ולא להרגיש כמו נגן אוטומטי פולשני.',
+  playLabel: 'להפעיל את הסרט',
+  unsupportedMessage: 'הדפדפן שלך לא תומך בניגון וידאו HTML5.',
+  src: '/assets/videos/final-film.mp4',
+  poster: '/assets/images/night-aerial.png',
+};
+
+const englishCredits: CreditsContent = {
+  eyebrow: 'Credits / Exit',
+  heading: 'End of Experience',
+  body:
+    'Architecture, editorial direction, and visual storytelling aligned into one scroll narrative.',
+  backToCoverLabel: 'Back to Cover',
+};
+
+const hebrewCredits: CreditsContent = {
+  eyebrow: 'קרדיטים / יציאה',
+  heading: 'סוף החוויה',
+  body:
+    'אדריכלות, בימוי עריכתי וסיפור חזותי מתחברים כאן למסע גלילה אחד, מדויק ושקט.',
+  backToCoverLabel: 'חזרה לכריכה',
+};
+
+const englishMetadata = {
+  lang: 'en',
+  dir: 'ltr',
+  title: 'Rothschild 22 Magazine',
+  description: 'Interactive editorial magazine for the Rothschild 22 architectural project.',
+} as const;
+
+const hebrewMetadata = {
+  lang: 'he',
+  dir: 'rtl',
+  title: 'Rothschild 22 | מהדורה אדריכלית',
+  description: 'מגזין דיגיטלי אינטראקטיבי לפרויקט האדריכלי Rothschild 22.',
+} as const;
+
+export const siteContentByLocale: Record<Locale, SiteContent> = {
+  en: {
+    metadata: englishMetadata,
+    navigation: englishNavigation,
+    hero: englishHero,
+    intro: englishIntro,
+    drawings: englishDrawings,
+    chapters: englishChapters,
+    gallery: englishGallery,
+    video: englishVideo,
+    credits: englishCredits,
+  },
+  he: {
+    metadata: hebrewMetadata,
+    navigation: hebrewNavigation,
+    hero: hebrewHero,
+    intro: hebrewIntro,
+    drawings: hebrewDrawings,
+    chapters: hebrewChapters,
+    gallery: hebrewGallery,
+    video: hebrewVideo,
+    credits: hebrewCredits,
+  },
+};
+
+export const isLocale = (value: string | null): value is Locale =>
+  value === 'en' || value === 'he';
