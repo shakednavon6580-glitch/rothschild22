@@ -105,13 +105,17 @@ describe('mobile image rendering', () => {
     const galleryImage = screen.getByAltText('Aerial building hero view');
 
     expect(window.getComputedStyle(heroImage).height).toBe('100%');
-    expect(window.getComputedStyle(galleryImage).height).toBe('100%');
     expect(window.getComputedStyle(chapterImage).height).toBe('auto');
+    expect(window.getComputedStyle(chapterImage).width).toBe('100%');
     expect(window.getComputedStyle(chapterImage).maxWidth).toBe('100%');
     expect(window.getComputedStyle(drawingImage).height).toBe('auto');
     expect(window.getComputedStyle(drawingImage).width).toBe('100%');
-    expect(globalStyles).toMatch(/\.drawing-card__image\s*\{[\s\S]*?height:\s*auto;/);
-    expect(globalStyles).toMatch(/\.chapter__image\s*\{[\s\S]*?height:\s*auto;/);
+    expect(globalStyles).toMatch(
+      /:where\(img\[width\]\[height\]\)\s*\{[\s\S]*?height:\s*auto;/,
+    );
+    expect(globalStyles).toMatch(
+      /\.gallery-marquee__image\s*\{[\s\S]*?width:\s*100%;[\s\S]*?height:\s*100%;[\s\S]*?object-fit:\s*cover;/,
+    );
     expect(globalStyles).toMatch(
       /@media \(max-width: 720px\)\s*\{[\s\S]*?\.chapter__image\s*\{[\s\S]*?min-height:\s*320px;/,
     );

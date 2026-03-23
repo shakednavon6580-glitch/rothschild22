@@ -7,6 +7,10 @@ import { siteContentByLocale } from '../data/project';
 import { Hero } from './Hero';
 
 let prefersReducedMotion = false;
+const globalStyles = readFileSync(resolve(process.cwd(), 'src/styles/global.css'), 'utf8').replace(
+  /@import[^;]+;/g,
+  '',
+);
 
 vi.mock('framer-motion', () => {
   const motion = new Proxy(
@@ -39,6 +43,12 @@ vi.mock('framer-motion', () => {
 describe('hero media', () => {
   beforeEach(() => {
     prefersReducedMotion = false;
+    document.head.innerHTML = '';
+
+    const styleElement = document.createElement('style');
+    styleElement.setAttribute('data-test-styles', 'global');
+    styleElement.textContent = globalStyles;
+    document.head.appendChild(styleElement);
   });
 
   afterEach(() => {
@@ -106,16 +116,31 @@ describe('hero media', () => {
     expect(screen.getByText(hero.eyebrow)).toBeInTheDocument();
   });
 
+  it('keeps the hero image on the desktop fill contract after intrinsic dimensions are added', () => {
+    prefersReducedMotion = true;
+
+    const hero = siteContentByLocale.en.hero;
+    const { container } = render(<Hero {...hero} dir="ltr" />);
+    const image = container.querySelector('.hero__image') as HTMLImageElement | null;
+
+    expect(image).toHaveAttribute('width', '2760');
+    expect(image).toHaveAttribute('height', '1504');
+    expect(window.getComputedStyle(image as HTMLImageElement).width).toBe('100%');
+    expect(window.getComputedStyle(image as HTMLImageElement).height).toBe('100%');
+    expect(globalStyles).toMatch(
+      /\.hero__video,\s*\.hero__image\s*\{[\s\S]*?width:\s*100%;[\s\S]*?height:\s*100%;[\s\S]*?object-fit:\s*cover;/,
+    );
+  });
+
   it('uses a lighter glass treatment for the hero overlay while preserving layering styles', () => {
-    const styles = readFileSync(resolve(process.cwd(), 'src/styles/global.css'), 'utf8');
-    const backgroundAlphaMatch = styles.match(
+    const backgroundAlphaMatch = globalStyles.match(
       /--hero-content-bg:\s*rgba\(\s*20,\s*20,\s*18,\s*([0-9.]+)\s*\)/,
     );
 
     expect(backgroundAlphaMatch).not.toBeNull();
     expect(Number(backgroundAlphaMatch?.[1] ?? 1)).toBeLessThan(0.18);
-    expect(styles).toContain('--hero-content-blur: 8px;');
-    expect(styles).toMatch(
+    expect(globalStyles).toContain('--hero-content-blur: 8px;');
+    expect(globalStyles).toMatch(
       /\.hero__content\s*\{[\s\S]*?z-index:\s*1;[\s\S]*?border:\s*1px solid var\(--hero-content-border\);[\s\S]*?background:[\s\S]*?var\(--hero-content-bg\);[\s\S]*?box-shadow:\s*var\(--hero-content-shadow\);[\s\S]*?backdrop-filter:\s*blur\(var\(--hero-content-blur\)\);[\s\S]*?\}/,
     );
   });

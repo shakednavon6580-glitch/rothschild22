@@ -15,11 +15,14 @@ const imageDimensionsBySrc = {
   '/assets/images/night-aerial.png': { width: 2502, height: 1696 },
   '/assets/images/pool-perspective.png': { width: 2816, height: 1536 },
   '/assets/images/street-facade.png': { width: 2816, height: 1536 },
-} as Record<string, ImageDimensions>;
+} as const satisfies Record<string, ImageDimensions>;
 
 export function getImageDimensions(src: string): ImageDimensions | undefined {
   const normalizedSrc = normalizeImageSrc(src);
-  return imageDimensionsBySrc[normalizedSrc];
+
+  return normalizedSrc in imageDimensionsBySrc
+    ? imageDimensionsBySrc[normalizedSrc as keyof typeof imageDimensionsBySrc]
+    : undefined;
 }
 
 function normalizeImageSrc(src: string) {

@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { forwardRef, type ComponentPropsWithoutRef } from 'react';
 import { cleanup, render, screen, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -9,6 +11,10 @@ import {
 import { siteContentByLocale } from '../data/project';
 
 const reducedMotionState = vi.hoisted(() => ({ enabled: false }));
+const globalStyles = readFileSync(resolve(process.cwd(), 'src/styles/global.css'), 'utf8').replace(
+  /@import[^;]+;/g,
+  '',
+);
 
 vi.mock('framer-motion', () => ({
   motion: {
@@ -107,6 +113,20 @@ describe('Gallery marquee', () => {
         GALLERY_MARQUEE_IMAGE_ASPECT_RATIO,
       );
     });
+  });
+
+  it('keeps the gallery image fill rule while each frame preserves its aspect ratio', () => {
+    render(<Gallery dir="ltr" section={englishGallerySection} />);
+
+    const frame = screen.getAllByTestId('gallery-marquee-frame')[0] as HTMLElement;
+    const image = within(frame).getByRole('img');
+
+    expect(image).toHaveAttribute('width', '2760');
+    expect(image).toHaveAttribute('height', '1504');
+    expect(frame).toHaveAttribute('data-gallery-aspect-ratio', GALLERY_MARQUEE_IMAGE_ASPECT_RATIO);
+    expect(globalStyles).toMatch(
+      /\.gallery-marquee__image\s*\{[\s\S]*?width:\s*100%;[\s\S]*?height:\s*100%;[\s\S]*?object-fit:\s*cover;/,
+    );
   });
 
   it('duplicates the gallery sequence for a seamless infinite marquee', () => {
