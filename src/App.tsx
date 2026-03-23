@@ -25,7 +25,7 @@ function getInitialLocale(): Locale {
     return storedLocale;
   }
 
-  return window.navigator.language.toLowerCase().startsWith('he') ? 'he' : DEFAULT_LOCALE;
+  return DEFAULT_LOCALE;
 }
 
 function syncDocumentMetadata(metadata: MetadataContent) {

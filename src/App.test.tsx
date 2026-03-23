@@ -36,6 +36,10 @@ describe('localized app shell', () => {
   beforeEach(() => {
     cleanup();
     window.localStorage.clear();
+    Object.defineProperty(window.navigator, 'language', {
+      configurable: true,
+      value: 'en-US',
+    });
     document.documentElement.lang = 'en';
     document.documentElement.dir = 'ltr';
     document.title = '';
@@ -78,6 +82,23 @@ describe('localized app shell', () => {
     expect(screen.getByTestId('gallery-marquee-track')).toBeInTheDocument();
   });
 
+  it('defaults to English for first-time visitors even when the browser prefers Hebrew', () => {
+    Object.defineProperty(window.navigator, 'language', {
+      configurable: true,
+      value: 'he-IL',
+    });
+
+    render(<App />);
+
+    expect(document.documentElement.lang).toBe('en');
+    expect(document.documentElement.dir).toBe('ltr');
+    expect(screen.getByRole('button', { name: 'English' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
+    expect(screen.getByText('Enter Project')).toBeInTheDocument();
+  });
+
   it('boots in Hebrew when the persisted locale is stored', () => {
     window.localStorage.setItem(LOCALE_STORAGE_KEY, 'he');
 
@@ -91,5 +112,20 @@ describe('localized app shell', () => {
     );
     expect(screen.getByText('להיכנס לפרויקט')).toBeInTheDocument();
     expect(screen.queryByText('Enter Project')).not.toBeInTheDocument();
+  });
+
+  it('falls back to English when the persisted locale is unsupported', () => {
+    Object.defineProperty(window.navigator, 'language', {
+      configurable: true,
+      value: 'he-IL',
+    });
+    window.localStorage.setItem(LOCALE_STORAGE_KEY, 'fr');
+
+    render(<App />);
+
+    expect(document.documentElement.lang).toBe('en');
+    expect(document.documentElement.dir).toBe('ltr');
+    expect(window.localStorage.getItem(LOCALE_STORAGE_KEY)).toBe('en');
+    expect(screen.getByText('Enter Project')).toBeInTheDocument();
   });
 });

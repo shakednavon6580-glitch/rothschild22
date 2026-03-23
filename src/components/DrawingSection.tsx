@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { getImageDimensions } from '../data/imageManifest';
 import type { DrawingItem, DrawingsSectionData } from '../types/content';
 import { SectionShell } from './SectionShell';
 
@@ -43,6 +44,8 @@ type DrawingCardProps = {
 function DrawingCard({ item, index, missingFileLabel }: DrawingCardProps) {
   const [hasError, setHasError] = useState(false);
   const [attempt, setAttempt] = useState(0);
+  const imageSrc = `${item.src}?v=${attempt}`;
+  const dimensions = getImageDimensions(imageSrc);
 
   useEffect(() => {
     if (!hasError) {
@@ -75,9 +78,11 @@ function DrawingCard({ item, index, missingFileLabel }: DrawingCardProps) {
         </div>
       ) : (
         <img
-          src={`${item.src}?v=${attempt}`}
+          src={imageSrc}
           alt={item.alt}
           className="drawing-card__image"
+          width={dimensions?.width}
+          height={dimensions?.height}
           loading="lazy"
           decoding="async"
           onError={() => setHasError(true)}
