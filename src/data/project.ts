@@ -167,7 +167,7 @@ const englishChapters: Chapter[] = [
     body: [],
     image: '/assets/images/cover-brand.png',
     imageAlt: 'Aerial architectural view of Rothschild 22',
-    layout: 'quiet',
+    layout: 'quiet-image-led',
     cta: 'Continue to Materiality',
   },
   {
@@ -206,7 +206,7 @@ const englishChapters: Chapter[] = [
     body: [],
     image: '/assets/images/new-me.png',
     imageAlt: 'Living room with panoramic city view',
-    layout: 'image-led',
+    layout: 'split',
     cta: 'Open Gallery',
   },
 ];
@@ -249,7 +249,7 @@ const hebrewChapters: Chapter[] = [
     body: [],
     image: '/assets/images/cover-brand.png',
     imageAlt: 'מבט אווירי אדריכלי על Rothschild 22',
-    layout: 'quiet',
+    layout: 'quiet-image-led',
     cta: 'להמשיך אל החומריות',
   },
   {
@@ -288,7 +288,7 @@ const hebrewChapters: Chapter[] = [
     body: [],
     image: '/assets/images/new-me.png',
     imageAlt: 'סלון עם מבט פנורמי על העיר',
-    layout: 'image-led',
+    layout: 'split',
     cta: 'לפתוח את הגלריה',
   },
 ];
@@ -430,7 +430,7 @@ const englishVideo: VideoContent = {
     'A calm transition into motion, designed as the emotional closing sequence rather than a disruptive autoplay element.',
   playLabel: 'Play Film',
   unsupportedMessage: 'Your browser does not support HTML5 video.',
-  src: '/assets/videos/final-film.mp4',
+  src: '/assets/videos/final-video.mp4',
   poster: '/assets/images/night-aerial.png',
 };
 
@@ -443,7 +443,7 @@ const hebrewVideo: VideoContent = {
     'מעבר רגוע מתמונה לתנועה, שנועד לסגור את החוויה רגשית ולא להרגיש כמו נגן אוטומטי פולשני.',
   playLabel: 'להפעיל את הסרט',
   unsupportedMessage: 'הדפדפן שלך לא תומך בניגון וידאו HTML5.',
-  src: '/assets/videos/final-film.mp4',
+  src: '/assets/videos/final-video.mp4',
   poster: '/assets/images/night-aerial.png',
 };
 

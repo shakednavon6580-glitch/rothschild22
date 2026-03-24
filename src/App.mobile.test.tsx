@@ -119,5 +119,13 @@ describe('mobile image rendering', () => {
     expect(globalStyles).toMatch(
       /@media \(max-width: 720px\)\s*\{[\s\S]*?\.chapter__image\s*\{[\s\S]*?min-height:\s*320px;/,
     );
+    expect(globalStyles).toMatch(/\.section-shell\s*\{[\s\S]*?padding:\s*4rem 0;/);
+    expect(globalStyles).toMatch(/\.chapter\s*\{[\s\S]*?padding:\s*2\.4rem 0;/);
+    expect(globalStyles).toMatch(
+      /\.section-shell\.gallery--marquee\s*\{[\s\S]*?padding-bottom:\s*2\.5rem;/,
+    );
+    expect(globalStyles).toMatch(
+      /#film\.section-shell\s*\{[\s\S]*?padding-top:\s*2\.5rem;/,
+    );
   });
 });

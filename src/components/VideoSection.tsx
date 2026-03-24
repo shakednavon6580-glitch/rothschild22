@@ -4,6 +4,11 @@ import { useRef } from 'react';
 import { SectionShell } from './SectionShell';
 import type { VideoContent } from '../types/content';
 
+type FullscreenCapableVideo = HTMLVideoElement & {
+  webkitRequestFullscreen?: () => Promise<void> | void;
+  msRequestFullscreen?: () => Promise<void> | void;
+};
+
 export function VideoSection({
   id,
   title,
@@ -17,12 +22,35 @@ export function VideoSection({
 }: VideoContent) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
+  const requestFullscreen = async (videoElement: FullscreenCapableVideo) => {
+    const fullscreenMethod =
+      videoElement.requestFullscreen ??
+      videoElement.webkitRequestFullscreen ??
+      videoElement.msRequestFullscreen;
+
+    if (!fullscreenMethod) {
+      return;
+    }
+
+    try {
+      await fullscreenMethod.call(videoElement);
+    } catch {
+      // Fullscreen can be blocked by browser policy; keep playback running.
+    }
+  };
+
   const handlePlay = async () => {
     if (!videoRef.current) {
       return;
     }
 
-    await videoRef.current.play();
+    try {
+      await videoRef.current.play();
+    } catch {
+      return;
+    }
+
+    await requestFullscreen(videoRef.current as FullscreenCapableVideo);
     videoRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 

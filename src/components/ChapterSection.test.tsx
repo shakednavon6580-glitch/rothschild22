@@ -111,4 +111,32 @@ describe('ChapterSection', () => {
       screen.getByText('One iconic frame should carry the chapter before the interface does.'),
     ).toBeInTheDocument();
   });
+
+  it('swaps sides only for chapters 03 and 06', () => {
+    const expectedLayoutsByChapterNumber = {
+      '01': 'chapter--image-led',
+      '02': 'chapter--split',
+      '03': 'chapter--quiet-image-led',
+      '04': 'chapter--split',
+      '05': 'chapter--image-led',
+      '06': 'chapter--split',
+    } as const;
+
+    for (const locale of ['en', 'he'] as const) {
+      for (const chapter of siteContentByLocale[locale].chapters) {
+        const { container } = render(<ChapterSection chapter={chapter} />);
+        const section = container.querySelector('section');
+        const expectedClass =
+          expectedLayoutsByChapterNumber[
+            chapter.number as keyof typeof expectedLayoutsByChapterNumber
+          ];
+
+        expect(section).toBeInTheDocument();
+        expect(section).toHaveClass('chapter');
+        expect(section).toHaveClass(expectedClass);
+
+        cleanup();
+      }
+    }
+  });
 });
