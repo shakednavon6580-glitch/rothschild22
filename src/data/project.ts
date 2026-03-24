@@ -99,8 +99,7 @@ const englishIntro: IntroContent = {
   id: 'introduction',
   heading: 'A residential narrative shaped as a digital magazine.',
   eyebrow: 'Introduction',
-  subheading:
-    'The experience is built as a quiet sequence of chapters, balancing fast scanning with slower, editorial reading.',
+  subheading: '',
   body:
     'The interface remains intentionally restrained: generous white space, precise typography, and fluid motion that reveals content rather than competing with it.',
   ctaLabel: 'Start Reading',
@@ -117,8 +116,7 @@ const hebrewIntro: IntroContent = {
   id: 'introduction',
   heading: 'פרויקט מגורים שמסופר כמו גיליון דיגיטלי.',
   eyebrow: 'פתיחה',
-  subheading:
-    'החוויה בנויה כרצף מדוד של פרקים, כזה שמאפשר גם סריקה מהירה וגם קריאה איטית ומדויקת.',
+  subheading: '',
   body:
     'הממשק שומר על איפוק מכוון: מרווחים נדיבים, טיפוגרפיה מדויקת ותנועה זורמת שמגלה את התוכן בלי להתחרות בו.',
   ctaLabel: 'להתחיל את הסיור',
@@ -138,11 +136,8 @@ const englishChapters: Chapter[] = [
     title: 'Vision',
     eyebrow: 'A coastal skyline statement',
     intro:
-      'The project begins as a quiet monument: generous terraces, continuous glazing, and a silhouette designed to feel sculptural from every street approach.',
-    body: [
-      'Rather than compete with the boulevard, the building rises as a measured sequence of setbacks that preserve openness and amplify the sea horizon.',
-      'The editorial experience mirrors that discipline with wide margins, restrained controls, and one dominant visual move per chapter.',
-    ],
+      'The project begins as a quiet monument: generous terraces, continuous glazing, and a sculptural silhouette from every street approach. Rather than compete with the boulevard, it rises as measured setbacks that preserve openness and amplify the sea horizon—a discipline the editorial experience mirrors with wide margins, restrained controls, and one dominant visual move per chapter.',
+    body: [],
     quote: 'One iconic frame should carry the chapter before the interface does.',
     image: '/assets/images/glass-corner.png',
     imageAlt: 'Corner view with terrace and glazing',
@@ -155,11 +150,8 @@ const englishChapters: Chapter[] = [
     title: 'Context',
     eyebrow: 'City grain and sea proximity',
     intro:
-      'The building sits inside a dense white urban fabric, where the coastline and boulevard geometry shape every view corridor.',
-    body: [
-      'Its placement balances privacy with exposure, opening key edges toward light and long perspectives while preserving a strong street presence below.',
-      'In UI terms, this becomes an asymmetric composition with a large image block and a compact column of text that never overpowers the visuals.',
-    ],
+      'The building sits inside a dense white urban fabric, where the coastline and boulevard shape every view corridor. Its placement balances privacy with exposure, opening toward light and long perspectives while preserving a strong street presence—an asymmetric composition where a large image block and compact text column never overpower the visuals.',
+    body: [],
     image: '/assets/images/street-facade.png',
     imageAlt: 'Street level perspective of the facade',
     layout: 'split',
@@ -171,11 +163,8 @@ const englishChapters: Chapter[] = [
     title: 'Concept',
     eyebrow: 'Terraces as spatial rhythm',
     intro:
-      'The massing unfolds as layered planes, using terraces and glazing to turn the skyline into an active part of the interior experience.',
-    body: [
-      'Each level is treated as a threshold between enclosure and openness, making movement through the project feel like a sequence of framed reveals.',
-      'This chapter uses a quieter tempo, longer vertical spacing, and subtle motion to communicate architectural progression rather than spectacle.',
-    ],
+      'The massing unfolds as layered planes, using terraces and glazing to turn the skyline into an active part of the interior. Each level acts as a threshold between enclosure and openness, so movement feels like a sequence of framed reveals—a quieter tempo, generous spacing, and subtle motion that speaks to architectural progression rather than spectacle.',
+    body: [],
     image: '/assets/images/cover-brand.png',
     imageAlt: 'Aerial architectural view of Rothschild 22',
     layout: 'quiet',
@@ -187,11 +176,8 @@ const englishChapters: Chapter[] = [
     title: 'Materiality',
     eyebrow: 'Stone, glass, oak, brushed metal',
     intro:
-      'Inside, the palette turns tactile and warm: pale marble, integrated joinery, and soft daylight reflected across smooth surfaces.',
-    body: [
-      'The material story is deliberately reduced, allowing texture and shadow to do the expressive work without visual noise.',
-      'The interface supports that with a restrained accent color, thin dividers, and image crops that privilege detail over repetition.',
-    ],
+      'Inside, the palette turns tactile and warm: pale marble, integrated joinery, and soft daylight across smooth surfaces. The material story stays deliberately reduced, letting texture and shadow do the expressive work, supported by restrained accents and image crops that privilege detail over repetition.',
+    body: [],
     image: '/assets/images/kitchen-view.png',
     imageAlt: 'Minimal kitchen with sea view',
     layout: 'split',
@@ -203,11 +189,8 @@ const englishChapters: Chapter[] = [
     title: 'Interior',
     eyebrow: 'Evening illumination as the final skyline signature',
     intro:
-      'The interior sequence becomes softer and more intimate, using measured lighting, curated furniture, and tactile finishes to turn the residence into a composed evening atmosphere.',
-    body: [
-      'Rather than treating the apartment as a neutral shell, this chapter focuses on mood, proportion, and domestic calibration, where each object reinforces the calm architectural language.',
-      'Placed after materiality, it translates the palette into lived space and bridges the project from surface expression into inhabitation and comfort.',
-    ],
+      'The interior sequence becomes softer and more intimate—measured lighting, curated furniture, and tactile finishes turning the residence into a composed evening atmosphere. Rather than a neutral shell, the space focuses on mood and proportion, each object reinforcing the calm architectural language as the palette translates into lived space and comfort.',
+    body: [],
     image: '/assets/images/night-aerial.png',
     imageAlt: 'Night aerial view of Rothschild 22 with illuminated skyline presence',
     layout: 'image-led',
@@ -219,12 +202,9 @@ const englishChapters: Chapter[] = [
     title: 'Spatial Experience',
     eyebrow: 'Living with the city in frame',
     intro:
-      'Daily life unfolds in continuous visual contact with the boulevard, where interior calm meets an active urban edge beyond the glass.',
-    body: [
-      'Rooms are organized for long views, soft transitions, and a sense of elevation that feels immersive even when the composition remains minimal.',
-      'The magazine closes the narrative arc by moving from these inhabited views into a deeper gallery and, finally, a filmic summary.',
-    ],
-    image: '/assets/images/living-room.png',
+      'Daily life unfolds in continuous visual contact with the boulevard, where interior calm meets an active urban edge beyond the glass. Rooms are organized for long views, soft transitions, and elevation that stays immersive even when minimal—before the narrative closes by moving into a deeper gallery and a filmic summary.',
+    body: [],
+    image: '/assets/images/new-me.png',
     imageAlt: 'Living room with panoramic city view',
     layout: 'image-led',
     cta: 'Open Gallery',
@@ -238,11 +218,8 @@ const hebrewChapters: Chapter[] = [
     title: 'חזון',
     eyebrow: 'אייקון שקט על קו הרקיע',
     intro:
-      'הפרויקט נולד כמבנה שיודע לנכוח בלי להרים קול: טרסות נדיבות, מעטפת זכוכית רציפה וצללית פיסולית שנקראת היטב מכל גישה רחוב.',
-    body: [
-      'במקום להתחרות בשדרה, המגדל עולה כרצף מדוד של נסיגות שמגדילות את תחושת הפתיחות ומחדדות את המפגש עם האופק.',
-      'גם הממשק מאמץ את אותו איפוק: שוליים רחבים, שליטה שקטה ופריים מרכזי אחד שנותן לכל פרק את הטון שלו.',
-    ],
+      'הפרויקט נולד כמבנה שיודע לנכוח בלי להרים קול: טרסות נדיבות, מעטפת זכוכית רציפה וצללית פיסולית שנקראת היטב מכל גישה רחוב. במקום להתחרות בשדרה, המגדל עולה כרצף מדוד של נסיגות שמגדילות את תחושת הפתיחות ומחדדות את המפגש עם האופק—איפוק שהממשק מאמץ בשוליים רחבים, שליטה שקטה ופריים מרכזי אחד שנותן לכל פרק את הטון שלו.',
+    body: [],
     quote: 'הפריים צריך להוביל את הפרק עוד לפני שהממשק נכנס לתמונה.',
     image: '/assets/images/glass-corner.png',
     imageAlt: 'מבט פינתי עם טרסה ומעטפת זכוכית',
@@ -255,11 +232,8 @@ const hebrewChapters: Chapter[] = [
     title: 'הקשר',
     eyebrow: 'עיר, קו חוף ורשת של מבטים',
     intro:
-      'הבניין נטוע בתוך מרקם עירוני לבן וצפוף, כזה שבו החוף והשדרה מגדירים כל כיוון מבט משמעותי.',
-    body: [
-      'המיקום שלו מאזן בין פרטיות לחשיפה: הוא נפתח אל האור והמרחק, אבל שומר על נוכחות חדה וברורה בגובה הרחוב.',
-      'במונחי ממשק, זו קומפוזיציה א-סימטרית שמעניקה לדימוי מקום גדול ולקריאה מקום מדויק, בלי שאחד יגבר על השני.',
-    ],
+      'הבניין נטוע בתוך מרקם עירוני לבן וצפוף, כזה שבו החוף והשדרה מגדירים כל כיוון מבט משמעותי. המיקום שלו מאזן בין פרטיות לחשיפה—נפתח אל האור והמרחק, אבל שומר על נוכחות חדה וברורה בגובה הרחוב—וקומפוזיציה א-סימטרית שמעניקה לדימוי מקום גדול ולקריאה מקום מדויק, בלי שאחד יגבר על השני.',
+    body: [],
     image: '/assets/images/street-facade.png',
     imageAlt: 'מבט רחוב על החזית',
     layout: 'split',
@@ -271,11 +245,8 @@ const hebrewChapters: Chapter[] = [
     title: 'הרעיון',
     eyebrow: 'טרסות כקצב אדריכלי',
     intro:
-      'המסה נפרשת כשכבות מדורגות, והטרסות הופכות את קו הרקיע לחלק פעיל מחוויית הפנים.',
-    body: [
-      'כל קומה מתפקדת כנקודת מעבר בין סגירות לפתיחות, כך שהתנועה בפרויקט מרגישה כמו סדרה של גילויים מדויקים.',
-      'לכן גם הפרק הזה עובד בקצב רגוע יותר, עם מרווחים אנכיים נדיבים ותנועה עדינה שמדגישה מהלך אדריכלי ולא מופע.',
-    ],
+      'המסה נפרשת כשכבות מדורגות, והטרסות הופכות את קו הרקיע לחלק פעיל מחוויית הפנים. כל קומה מתפקדת כנקודת מעבר בין סגירות לפתיחות, כך שהתנועה בפרויקט מרגישה כמו סדרה של גילויים מדויקים—קצב רגוע, מרווחים אנכיים נדיבים ותנועה עדינה שמדגישה מהלך אדריכלי ולא מופע.',
+    body: [],
     image: '/assets/images/cover-brand.png',
     imageAlt: 'מבט אווירי אדריכלי על Rothschild 22',
     layout: 'quiet',
@@ -287,11 +258,8 @@ const hebrewChapters: Chapter[] = [
     title: 'חומריות',
     eyebrow: 'אבן, זכוכית, עץ אלון ומתכת מוברשת',
     intro:
-      'בפנים, הפלטה נעשית חמה ומוחשית יותר: שיש בהיר, נגרות אינטגרלית ואור יום רך שנשבר על משטחים מדויקים.',
-    body: [
-      'סיפור החומרים נשאר מצומצם במתכוון, כדי שהמרקם והצל יעשו את העבודה האקספרסיבית בלי רעש מיותר.',
-      'גם הממשק תומך בכך עם צבע הדגשה מרוסן, קווי חלוקה דקים וחיתוכי תמונה שמעדיפים חומר ופרט על פני עומס.',
-    ],
+      'בפנים, הפלטה נעשית חמה ומוחשית יותר: שיש בהיר, נגרות אינטגרלית ואור יום רך שנשבר על משטחים מדויקים. סיפור החומרים נשאר מצומצם במתכוון, כדי שהמרקם והצל יעשו את העבודה האקספרסיבית—צבע הדגשה מרוסן, קווי חלוקה דקים וחיתוכי תמונה שמעדיפים חומר ופרט על פני עומס.',
+    body: [],
     image: '/assets/images/kitchen-view.png',
     imageAlt: 'מטבח מינימליסטי עם מבט לים',
     layout: 'split',
@@ -303,11 +271,8 @@ const hebrewChapters: Chapter[] = [
     title: 'חללי הפנים',
     eyebrow: 'אור ערב שנותן למגדל זהות לילית',
     intro:
-      'רצף הפנים נעשה אינטימי ורך יותר, עם תאורה מדודה, ריהוט אצור וטקסטורות שמייצרות אווירה אסופה ומעודנת.',
-    body: [
-      'במקום להתייחס לדירה כקליפה ניטרלית, הפרק הזה עוסק במצב רוח, בפרופורציה ובאופן שבו כל אובייקט מחזק את השפה האדריכלית.',
-      'אחרי החומריות, זהו השלב שבו הפלטה הופכת לחיים עצמם, ומחברת בין מעטפת מדויקת לנוחות יומיומית.',
-    ],
+      'רצף הפנים נעשה אינטימי ורך יותר, עם תאורה מדודה, ריהוט אצור וטקסטורות שמייצרות אווירה אסופה ומעודנת. במקום להתייחס לדירה כקליפה ניטרלית, הפרק עוסק במצב רוח ובפרופורציה—כל אובייקט מחזק את השפה האדריכלית, והפלטה הופכת לחיים עצמם ומחברת בין מעטפת מדויקת לנוחות יומיומית.',
+    body: [],
     image: '/assets/images/night-aerial.png',
     imageAlt: 'מבט לילי אווירי על Rothschild 22',
     layout: 'image-led',
@@ -319,12 +284,9 @@ const hebrewChapters: Chapter[] = [
     title: 'חוויית המגורים',
     eyebrow: 'העיר תמיד בתוך הפריים',
     intro:
-      'חיי היומיום נפתחים אל השדרה ברצף כמעט קולנועי, במקום שבו שקט פנימי פוגש קצב אורבני מעבר לזכוכית.',
-    body: [
-      'החדרים מסודרים לטובת מבטים ארוכים, מעברים רכים ותחושת גובה שנשארת נוכחת גם כשהשפה נשמרת מינימלית.',
-      'מכאן המסלול נסגר באופן טבעי אל גלריית הדימויים, ומשם אל סרט הסיום שמסכם את הסיפור בתנועה.',
-    ],
-    image: '/assets/images/living-room.png',
+      'חיי היומיום נפתחים אל השדרה ברצף כמעט קולנועי, במקום שבו שקט פנימי פוגש קצב אורבני מעבר לזכוכית. החדרים מסודרים לטובת מבטים ארוכים, מעברים רכים ותחושת גובה שנשארת נוכחת גם כשהשפה נשמרת מינימלית—מכאן המסלול נסגר באופן טבעי אל גלריית הדימויים ומשם אל סרט הסיום שמסכם את הסיפור בתנועה.',
+    body: [],
+    image: '/assets/images/new-me.png',
     imageAlt: 'סלון עם מבט פנורמי על העיר',
     layout: 'image-led',
     cta: 'לפתוח את הגלריה',

@@ -366,7 +366,7 @@ main {
 }
 
 .section-shell {
-  padding: 8rem 0;
+  padding: 5rem 0;
 }
 
 .section-shell__header {
@@ -440,7 +440,7 @@ main {
   grid-template-columns: 0.95fr 1.05fr;
   gap: clamp(1.5rem, 4vw, 4rem);
   align-items: center;
-  padding: 4rem 0;
+  padding: 3rem 0;
 }
 
 .chapter--image-led .chapter__content {
