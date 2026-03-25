@@ -48,7 +48,7 @@ describe('Credits section animation and content', () => {
     ).toBeInTheDocument();
   });
 
-  it('renders a compact single-line mini-footer with the exact center copyright text', () => {
+  it('renders a connected single-line site-footer with the exact center copyright text', () => {
     render(<Credits content={siteContentByLocale.en.credits} />);
 
     expect(screen.getAllByLabelText('Site footer')).toHaveLength(1);
@@ -61,10 +61,23 @@ describe('Credits section animation and content', () => {
     );
   });
 
-  it('uses the same toolbar background token as the topbar', () => {
+  it('renders a logo image instead of text when logoUrl is provided', () => {
+    const { container } = render(
+      <Credits content={siteContentByLocale.en.credits} logoUrl="/brand-logo.png" />
+    );
+    const logoImg = container.querySelector('.site-footer__brand img');
+    expect(logoImg).not.toBeNull();
+    expect(logoImg!.getAttribute('src')).toBe('/brand-logo.png');
+    expect(logoImg!.getAttribute('alt')).toBe('Shaked Navon logo');
+  });
+
+  it('uses the same toolbar background token as the topbar and has larger spacing', () => {
     expect(globalStyles).toMatch(/--toolbar-bg:\s*linear-gradient\(/);
     expect(globalStyles).toMatch(/\.topbar\s*\{[\s\S]*?background:\s*var\(--toolbar-bg\);/);
-    expect(globalStyles).toMatch(/\.mini-footer\s*\{[\s\S]*?background:\s*var\(--toolbar-bg\);/);
+    expect(globalStyles).toMatch(/\.site-footer\s*\{[\s\S]*?background:\s*var\(--toolbar-bg\);/);
+    
+    // Verify it uses a larger footer spacing instead of ultra-compact mini-footer stripping
+    expect(globalStyles).toMatch(/\.site-footer\s*\{[\s\S]*?padding:\s*2\.5rem\s+1\.5rem;/);
   });
 
   it('uses cinematic reveal values when reduced motion is not preferred', () => {
