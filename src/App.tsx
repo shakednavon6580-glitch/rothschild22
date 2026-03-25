@@ -71,7 +71,7 @@ function App() {
         ))}
         <Gallery dir={content.metadata.dir} section={content.gallery} />
         <VideoSection {...content.video} />
-        <Credits content={content.credits} />
+        <Credits />
       </main>
     </div>
   );
