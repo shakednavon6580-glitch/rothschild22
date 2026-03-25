@@ -37,6 +37,8 @@ export function Credits({ content }: CreditsProps) {
           {content.backToCoverLabel}
         </a>
       </motion.div>
+
+      <p className="legal-line">all rights reserved shaked navon 2026</p>
     </footer>
   );
 }
