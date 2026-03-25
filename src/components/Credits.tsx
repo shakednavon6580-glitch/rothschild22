@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion';
+import { Linkedin } from 'lucide-react';
 import type { CreditsContent } from '../types/content';
 
 type CreditsProps = {
@@ -39,6 +40,26 @@ export function Credits({ content }: CreditsProps) {
           {content.backToCoverLabel}
         </a>
       </motion.div>
+
+      <div className="mini-footer" role="contentinfo" aria-label="Site footer">
+        <div className="mini-footer__row">
+          <div className="mini-footer__brand" aria-label="Brand">
+            Shaked Navon
+          </div>
+          <div className="mini-footer__copyright">
+            © 2026 Shaked Navon. All rights reserved
+          </div>
+          <a
+            className="mini-footer__link"
+            href="https://www.linkedin.com/in/shaked-navon-801053393/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn profile"
+          >
+            <Linkedin size={18} aria-hidden="true" focusable="false" />
+          </a>
+        </div>
+      </div>
     </footer>
   );
 }
