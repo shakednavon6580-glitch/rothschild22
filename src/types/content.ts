@@ -12,7 +12,7 @@ export type Chapter = {
   quote?: string;
   image: string;
   imageAlt: string;
-  layout?: 'split' | 'image-led' | 'quiet';
+  layout?: 'split' | 'image-led' | 'quiet' | 'quiet-image-led';
   cta: string;
 };
 

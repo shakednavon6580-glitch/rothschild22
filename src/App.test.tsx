@@ -80,6 +80,8 @@ describe('localized app shell', () => {
     expect(screen.getAllByText('שרטוטים').length).toBeGreaterThan(0);
     expect(screen.getAllByText('סרט סיום').length).toBeGreaterThan(0);
     expect(screen.getByTestId('gallery-marquee-track')).toBeInTheDocument();
+    expect(screen.queryByText('Credits / Exit')).not.toBeInTheDocument();
+    expect(screen.queryByText('קרדיטים / יציאה')).not.toBeInTheDocument();
   });
 
   it('defaults to English for first-time visitors even when the browser prefers Hebrew', () => {

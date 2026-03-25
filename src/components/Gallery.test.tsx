@@ -200,6 +200,22 @@ describe('Gallery marquee', () => {
     expect(document.querySelector('[data-marquee-state="animated"]')).toBeInTheDocument();
   });
 
+  it('applies premium hover-scale treatment without changing marquee structure', () => {
+    render(<Gallery dir="ltr" section={englishGallerySection} />);
+
+    expect(globalStyles).toMatch(
+      /\.gallery-marquee__item:hover\s*\{[\s\S]*?z-index:\s*3;/,
+    );
+    expect(globalStyles).toMatch(
+      /\.gallery-marquee__card:hover\s*\.gallery-marquee__image\s*\{[\s\S]*?transform:\s*scale\(1\.035\);/,
+    );
+    expect(globalStyles).toMatch(
+      /\.gallery-marquee__image\s*\{[\s\S]*?will-change:\s*transform;/,
+    );
+    expect(document.querySelectorAll('[data-gallery-copy]')).toHaveLength(2);
+    expect(screen.getByTestId('gallery-marquee-track')).toBeInTheDocument();
+  });
+
   it('switches to a single static strip when reduced motion is preferred', () => {
     reducedMotionState.enabled = true;
 
