@@ -900,6 +900,15 @@ main {
   gap: 1rem;
 }
 
+.legal-line {
+  width: var(--container);
+  margin: 0 auto;
+  padding: 1.6rem 0 2rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+  text-align: center;
+}
+
 .button:focus-visible,
 .topbar__menu:focus-visible,
 .language-switcher__button:focus-visible,

@@ -8,22 +8,20 @@ type CreditsProps = {
 
 export function Credits({ content }: CreditsProps) {
   const prefersReducedMotion = useReducedMotion();
+  const revealInitial = prefersReducedMotion
+    ? { opacity: 0 }
+    : { opacity: 0, y: 24, filter: 'blur(10px)' };
+  const revealInView = prefersReducedMotion
+    ? { opacity: 1 }
+    : { opacity: 1, y: 0, filter: 'blur(0px)' };
 
   return (
     <footer className="credits">
       <motion.div
-        initial={
-          prefersReducedMotion
-            ? { opacity: 0 }
-            : { opacity: 0, y: 22, filter: 'blur(10px)' }
-        }
-        whileInView={
-          prefersReducedMotion
-            ? { opacity: 1 }
-            : { opacity: 1, y: 0, filter: 'blur(0px)' }
-        }
+        initial={revealInitial}
+        whileInView={revealInView}
         viewport={{ once: true, amount: 0.25 }}
-        transition={{ duration: prefersReducedMotion ? 0.3 : 0.8, ease: 'easeOut' }}
+        transition={{ duration: 0.7, ease: 'easeOut' }}
       >
         <h2>{content.heading}</h2>
         <p>{content.body}</p>
@@ -31,10 +29,21 @@ export function Credits({ content }: CreditsProps) {
 
       <motion.div
         className="credits__actions"
-        initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
-        whileInView={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+        initial={revealInitial}
+        whileInView={revealInView}
         viewport={{ once: true, amount: 0.25 }}
-        transition={{ duration: prefersReducedMotion ? 0.25 : 0.55, ease: 'easeOut', delay: 0.12 }}
+        transition={{ duration: 0.7, ease: 'easeOut', delay: prefersReducedMotion ? 0 : 0.1 }}
+      >
+        <a className="button button--secondary" href="#cover">
+          {content.backToCoverLabel}
+        </a>
+      </motion.div>
+      <motion.div
+        className="credits__actions"
+        initial={revealInitial}
+        whileInView={revealInView}
+        viewport={{ once: true, amount: 0.25 }}
+        transition={{ duration: 0.7, ease: 'easeOut', delay: prefersReducedMotion ? 0 : 0.1 }}
       >
         <a className="button button--secondary" href="#cover">
           {content.backToCoverLabel}
@@ -63,3 +72,4 @@ export function Credits({ content }: CreditsProps) {
     </footer>
   );
 }
+  
