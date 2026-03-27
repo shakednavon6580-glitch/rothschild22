@@ -45,6 +45,7 @@ export function ChapterSection({ chapter }: ChapterSectionProps) {
           src={chapter.image}
           alt={chapter.imageAlt}
           className="chapter__image"
+          priority={chapter.number === '01'}
           sizes="(max-width: 960px) 100vw, 50vw"
         />
       </motion.div>

@@ -430,7 +430,7 @@ const englishVideo: VideoContent = {
     'A calm transition into motion, designed as the emotional closing sequence rather than a disruptive autoplay element.',
   playLabel: 'Play Film',
   unsupportedMessage: 'Your browser does not support HTML5 video.',
-  src: '/assets/videos/final-video.mp4',
+  src: '/assets/videos/final.video.mp4',
   poster: '/assets/images/night-aerial.png',
 };
 
@@ -443,7 +443,7 @@ const hebrewVideo: VideoContent = {
     'מעבר רגוע מתמונה לתנועה, שנועד לסגור את החוויה רגשית ולא להרגיש כמו נגן אוטומטי פולשני.',
   playLabel: 'להפעיל את הסרט',
   unsupportedMessage: 'הדפדפן שלך לא תומך בניגון וידאו HTML5.',
-  src: '/assets/videos/final-video.mp4',
+  src: '/assets/videos/final.video.mp4',
   poster: '/assets/images/night-aerial.png',
 };
 

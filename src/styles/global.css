@@ -985,6 +985,15 @@ main {
     order: initial;
   }
 
+  /*
+   * Mobile browsers can occasionally miss in-view animation callbacks,
+   * leaving media wrappers stuck at opacity: 0. Keep chapter media visible.
+   */
+  .chapter__media {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
   .chapter__image {
     min-height: 420px;
   }

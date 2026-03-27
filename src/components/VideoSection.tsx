@@ -6,6 +6,7 @@ import type { VideoContent } from '../types/content';
 
 type FullscreenCapableVideo = HTMLVideoElement & {
   webkitRequestFullscreen?: () => Promise<void> | void;
+  webkitEnterFullscreen?: () => Promise<void> | void;
   msRequestFullscreen?: () => Promise<void> | void;
 };
 
@@ -28,30 +29,59 @@ export function VideoSection({
       videoElement.webkitRequestFullscreen ??
       videoElement.msRequestFullscreen;
 
-    if (!fullscreenMethod) {
-      return;
+    if (fullscreenMethod) {
+      try {
+        await fullscreenMethod.call(videoElement);
+        return;
+      } catch {
+        // Keep playback running when fullscreen is blocked by browser policy.
+      }
     }
 
+    // iPhone Safari supports a dedicated fullscreen API on video elements.
+    if (videoElement.webkitEnterFullscreen) {
+      try {
+        await videoElement.webkitEnterFullscreen();
+      } catch {
+        // Keep playback inline if iOS fullscreen is blocked.
+      }
+    }
+  };
+
+  const playWithFallback = async (videoElement: HTMLVideoElement) => {
     try {
-      await fullscreenMethod.call(videoElement);
+      await videoElement.play();
+      return true;
     } catch {
-      // Fullscreen can be blocked by browser policy; keep playback running.
+      // Some mobile browsers can block script-driven playback unless muted.
+      videoElement.muted = true;
+      try {
+        await videoElement.play();
+        return true;
+      } catch {
+        return false;
+      }
     }
   };
 
   const handlePlay = async () => {
-    if (!videoRef.current) {
+    const videoElement = videoRef.current;
+
+    if (!videoElement) {
       return;
     }
 
-    try {
-      await videoRef.current.play();
-    } catch {
+    videoElement.playsInline = true;
+
+    const hasPlayed = await playWithFallback(videoElement);
+    if (!hasPlayed) {
+      videoElement.controls = true;
+      videoElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
 
-    await requestFullscreen(videoRef.current as FullscreenCapableVideo);
-    videoRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    await requestFullscreen(videoElement as FullscreenCapableVideo);
+    videoElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
   return (
@@ -81,6 +111,7 @@ export function VideoSection({
           className="film-panel__video"
           controls
           playsInline
+          aria-label={title}
           preload="metadata"
           poster={poster}
         >

@@ -90,14 +90,17 @@ describe('ChapterSection', () => {
   it('preserves chapter layout structure: number, eyebrow, title, image, CTA', () => {
     const chapter = siteContentByLocale.en.chapters[0];
     const { container } = render(<ChapterSection chapter={chapter} />);
+    const image = container.querySelector('img');
 
     expect(container.querySelector('.chapter__number')).toHaveTextContent('01');
     expect(container.querySelector('.eyebrow')).toHaveTextContent(
       'A coastal skyline statement',
     );
     expect(container.querySelector('h2')).toHaveTextContent('Vision');
-    expect(container.querySelector('img')).toBeInTheDocument();
-    expect(container.querySelector('img')).toHaveAttribute('alt', chapter.imageAlt);
+    expect(image).toBeInTheDocument();
+    expect(image).toHaveAttribute('alt', chapter.imageAlt);
+    expect(image).toHaveAttribute('loading', 'eager');
+    expect(image).toHaveAttribute('fetchpriority', 'high');
     expect(container.querySelector('.chapter__cta')).toHaveTextContent(
       'Continue to Context',
     );

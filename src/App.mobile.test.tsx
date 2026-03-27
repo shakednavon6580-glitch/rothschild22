@@ -11,6 +11,19 @@ const globalStyles = readFileSync(resolve(process.cwd(), 'src/styles/global.css'
   '',
 );
 
+const setViewport = (width: number, height: number) => {
+  Object.defineProperty(window, 'innerWidth', {
+    configurable: true,
+    value: width,
+    writable: true,
+  });
+  Object.defineProperty(window, 'innerHeight', {
+    configurable: true,
+    value: height,
+    writable: true,
+  });
+};
+
 vi.mock('framer-motion', () => {
   const motion = new Proxy(
     {},
@@ -45,16 +58,7 @@ describe('mobile image rendering', () => {
     reducedMotionState.enabled = true;
     window.localStorage.clear();
     document.head.innerHTML = '';
-    Object.defineProperty(window, 'innerWidth', {
-      configurable: true,
-      value: 390,
-      writable: true,
-    });
-    Object.defineProperty(window, 'innerHeight', {
-      configurable: true,
-      value: 844,
-      writable: true,
-    });
+    setViewport(390, 844);
 
     const styleElement = document.createElement('style');
     styleElement.setAttribute('data-test-styles', 'global');
@@ -128,4 +132,38 @@ describe('mobile image rendering', () => {
       /#film\.section-shell\s*\{[\s\S]*?padding-top:\s*2\.5rem;/,
     );
   });
+
+  it.each([
+    { label: 'iPhone', width: 390, height: 844 },
+    { label: 'Android narrow', width: 360, height: 800 },
+    { label: 'Small tablet portrait', width: 768, height: 1024 },
+  ])(
+    'keeps the 01 Vision image visible and sized for $label viewport',
+    ({ width, height }) => {
+      setViewport(width, height);
+      render(<App />);
+
+      const visionImage = screen.getByAltText('Corner view with terrace and glazing');
+      const visionMedia = visionImage.closest('.chapter__media');
+      const imageStyles = window.getComputedStyle(visionImage);
+      const mediaStyles = visionMedia ? window.getComputedStyle(visionMedia) : null;
+
+      expect(visionImage).toBeVisible();
+      expect(visionImage).toHaveAttribute('loading', 'eager');
+      expect(visionImage).toHaveAttribute('fetchpriority', 'high');
+      expect(visionMedia).toBeInTheDocument();
+      expect(imageStyles.display).toBe('block');
+      expect(imageStyles.width).toBe('100%');
+      expect(imageStyles.maxWidth).toBe('100%');
+      expect(Number.parseFloat(imageStyles.minHeight)).toBeGreaterThan(0);
+      expect(mediaStyles?.opacity).not.toBe('0');
+      expect(mediaStyles?.overflow).not.toBe('hidden');
+      expect(globalStyles).not.toMatch(/\.chapter__image\s*\{[^}]*display:\s*none;/);
+      expect(globalStyles).not.toMatch(/\.chapter__media\s*\{[^}]*display:\s*none;/);
+      expect(globalStyles).not.toMatch(/\.chapter__media\s*\{[^}]*z-index:\s*-[0-9]+/);
+      expect(globalStyles).toMatch(
+        /@media \(max-width: 960px\)\s*\{[\s\S]*?\.chapter__media\s*\{[\s\S]*?opacity:\s*1 !important;[\s\S]*?transform:\s*none !important;/,
+      );
+    },
+  );
 });
