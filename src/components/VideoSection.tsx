@@ -3,6 +3,7 @@ import { Play } from 'lucide-react';
 import { useRef } from 'react';
 import { SectionShell } from './SectionShell';
 import type { VideoContent } from '../types/content';
+import { resolveMediaSrc } from '../utils/media';
 
 type FullscreenCapableVideo = HTMLVideoElement & {
   webkitRequestFullscreen?: () => Promise<void> | void;
@@ -22,6 +23,8 @@ export function VideoSection({
   poster,
 }: VideoContent) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const videoSrc = resolveMediaSrc(src);
+  const posterSrc = resolveMediaSrc(poster);
 
   const requestFullscreen = async (videoElement: FullscreenCapableVideo) => {
     const fullscreenMethod =
@@ -113,9 +116,9 @@ export function VideoSection({
           playsInline
           aria-label={title}
           preload="metadata"
-          poster={poster}
+          poster={posterSrc}
         >
-          <source src={src} type="video/mp4" />
+          <source src={videoSrc} type="video/mp4" />
           {unsupportedMessage}
         </video>
       </motion.div>

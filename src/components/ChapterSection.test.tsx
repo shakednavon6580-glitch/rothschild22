@@ -99,6 +99,7 @@ describe('ChapterSection', () => {
     expect(container.querySelector('h2')).toHaveTextContent('Vision');
     expect(image).toBeInTheDocument();
     expect(image).toHaveAttribute('alt', chapter.imageAlt);
+    expect(image).toHaveAttribute('src', expect.stringContaining('glass-corner.png'));
     expect(image).toHaveAttribute('loading', 'eager');
     expect(image).toHaveAttribute('fetchpriority', 'high');
     expect(container.querySelector('.chapter__cta')).toHaveTextContent(

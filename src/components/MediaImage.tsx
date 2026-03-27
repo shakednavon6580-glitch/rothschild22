@@ -1,4 +1,6 @@
+import { useEffect, useMemo, useState } from 'react';
 import { getImageDimensions } from '../data/imageManifest';
+import { resolveMediaSrc, toRelativeMediaSrc } from '../utils/media';
 
 type MediaImageProps = {
   src: string;
@@ -16,10 +18,23 @@ export function MediaImage({
   sizes = '100vw',
 }: MediaImageProps) {
   const dimensions = getImageDimensions(src);
+  const resolvedSrc = useMemo(() => resolveMediaSrc(src), [src]);
+  const relativeFallbackSrc = useMemo(() => toRelativeMediaSrc(src), [src]);
+  const [activeSrc, setActiveSrc] = useState(resolvedSrc);
+
+  useEffect(() => {
+    setActiveSrc(resolvedSrc);
+  }, [resolvedSrc]);
+
+  const handleLoadError = () => {
+    if (relativeFallbackSrc !== activeSrc) {
+      setActiveSrc(relativeFallbackSrc);
+    }
+  };
 
   return (
     <img
-      src={src}
+      src={activeSrc}
       alt={alt}
       className={className}
       width={dimensions?.width}
@@ -28,6 +43,7 @@ export function MediaImage({
       fetchPriority={priority ? 'high' : 'auto'}
       decoding="async"
       sizes={sizes}
+      onError={handleLoadError}
     />
   );
 }
