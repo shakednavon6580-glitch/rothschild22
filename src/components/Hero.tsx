@@ -1,7 +1,13 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowDownLeft, ArrowDownRight } from 'lucide-react';
+import { useCallback, useEffect, useRef } from 'react';
 import { MediaImage } from './MediaImage';
 import type { Direction } from '../types/content';
+
+const HAVE_CURRENT_DATA = 2;
+const HAVE_FUTURE_DATA = 3;
+
+export type HeroMediaSettledReason = 'video-ready' | 'video-error' | 'reduced-motion';
 
 type HeroProps = {
   eyebrow: string;
@@ -16,6 +22,7 @@ type HeroProps = {
   scrollLabel: string;
   metaAriaLabel: string;
   dir: Direction;
+  onMediaSettled?: (reason: HeroMediaSettledReason) => void;
 };
 
 export function Hero({
@@ -31,9 +38,69 @@ export function Hero({
   scrollLabel,
   metaAriaLabel,
   dir,
+  onMediaSettled,
 }: HeroProps) {
   const ArrowIcon = dir === 'rtl' ? ArrowDownLeft : ArrowDownRight;
   const prefersReducedMotion = useReducedMotion();
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const hasSettledMediaRef = useRef(false);
+
+  const settleMedia = useCallback(
+    (reason: HeroMediaSettledReason) => {
+      if (hasSettledMediaRef.current) {
+        return;
+      }
+
+      hasSettledMediaRef.current = true;
+      onMediaSettled?.(reason);
+    },
+    [onMediaSettled],
+  );
+
+  useEffect(() => {
+    hasSettledMediaRef.current = false;
+  }, [coverVideo, prefersReducedMotion]);
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      settleMedia('reduced-motion');
+      return;
+    }
+
+    const videoElement = videoRef.current;
+    if (!videoElement) {
+      return;
+    }
+
+    const handleLoadedData = () => {
+      if (videoElement.readyState >= HAVE_CURRENT_DATA) {
+        settleMedia('video-ready');
+      }
+    };
+
+    const handleCanPlayThrough = () => {
+      if (videoElement.readyState >= HAVE_FUTURE_DATA) {
+        settleMedia('video-ready');
+      }
+    };
+
+    const handleError = () => {
+      settleMedia('video-error');
+    };
+
+    handleCanPlayThrough();
+    handleLoadedData();
+
+    videoElement.addEventListener('loadeddata', handleLoadedData);
+    videoElement.addEventListener('canplaythrough', handleCanPlayThrough);
+    videoElement.addEventListener('error', handleError);
+
+    return () => {
+      videoElement.removeEventListener('loadeddata', handleLoadedData);
+      videoElement.removeEventListener('canplaythrough', handleCanPlayThrough);
+      videoElement.removeEventListener('error', handleError);
+    };
+  }, [prefersReducedMotion, settleMedia]);
 
   return (
     <section className="hero" id="cover">
@@ -48,13 +115,14 @@ export function Hero({
           />
         ) : (
           <video
+            ref={videoRef}
             className="hero__video"
             autoPlay
             muted
             loop
             playsInline
             poster={coverImage}
-            preload="metadata"
+            preload="auto"
           >
             <source src={coverVideo} type="video/mp4" />
           </video>
